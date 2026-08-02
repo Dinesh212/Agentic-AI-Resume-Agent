@@ -301,6 +301,18 @@ description: |
         Full-text keyword search across all resume sections: experience, skills,
         certifications, and achievements. Returns matching items from each section
         along with a summary of total matches. Case-insensitive.
+      body:
+        application/json:
+          description: Search request with keyword field
+          properties:
+            keyword:
+              type: string
+              description: The keyword to search for across all resume sections
+              example: MuleSoft
+          example: |
+            {
+              "keyword": "MuleSoft"
+            }
       responses:
         200:
           description: Search completed successfully

@@ -231,7 +231,7 @@ output application/json
     <flow name="post:\resume\search:api-config" doc:name="POST /resume/search">
         <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
         <logger level="INFO"
-                message="#[output application/java --- var kw = try(() -> (payload as Object).keyword as String) --- '[REST-API] search-resume | path=' ++ (attributes.requestPath default 'N/A') ++ ' | keyword=' ++ (kw.result default 'N/A')]"
+                message="#[output application/java --- '[REST-API] search-resume | path=' ++ (attributes.requestPath default 'N/A') ++ ' | keyword=' ++ ((payload as Object).keyword default 'N/A')]"
                 doc:name="Log REST API Call" category="com.resume.api"/>
         <flow-ref name="sub-flow-search-resume" doc:name="sub-flow-search-resume"/>
     </flow>
