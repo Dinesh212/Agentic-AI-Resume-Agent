@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+      xmlns:mcp="http://www.mulesoft.org/schema/mule/mcp"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+        http://www.mulesoft.org/schema/mule/mcp http://www.mulesoft.org/schema/mule/mcp/current/mule-mcp.xsd">
+
+    <!-- Configuration Properties -->
+    <configuration-properties file="config.properties"
+        doc:name="Configuration Properties"
+        doc:description="Loads application configuration properties including MCP server settings"/>
+
+    <!-- HTTP Listener Configuration — REST API on port 8081 -->
+    <http:listener-config name="HTTP_Listener_config"
+        doc:name="HTTP Listener Config"
+        doc:description="HTTP listener configuration for the Resume AI Agent REST API on port 8081">
+        <http:listener-connection host="0.0.0.0" port="${http.port}" />
+    </http:listener-config>
+
+    <!-- APIKit Configuration -->
+    <apikit:config name="api-config"
+        api="api/resume-ai-agent-api.raml"
+        outboundHeadersMapName="outboundHeaders"
+        httpStatusVarName="httpStatus"
+        doc:name="APIKit Config"
+        doc:description="APIKit configuration pointing to the RAML 1.0 spec for the Resume AI Agent API"/>
+
+    <!-- MCP Server Configuration — Streamable HTTP transport (shared port 8081, path /mcp)
+         Local:    POST http://localhost:8081/mcp
+         CloudHub: POST https://<app-name>.<region>.cloudhub.io/mcp
+         Both REST API and MCP share HTTP_Listener_config (port 8081). The MCP module
+         registers its own listener internally on the /mcp path using the same config. -->
+    <mcp:server-config name="Mcp_Config"
+        serverName="${mcp.serverName}"
+        serverVersion="${mcp.serverVersion}"
+        doc:name="MCP Server Config"
+        doc:description="MCP server configuration exposing resume tools via Streamable HTTP on port 8081 path /mcp (CloudHub-compatible single-port setup)">
+        <mcp:streamable-http-server-connection listenerConfig="HTTP_Listener_config">
+            <mcp:session-handling/>
+        </mcp:streamable-http-server-connection>
+    </mcp:server-config>
+
+</mule>

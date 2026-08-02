@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <!--
+    =============================================================
+    SHARED IMPLEMENTATION SUB-FLOWS
+    =============================================================
+    Single source of truth for all DataWeave transformations.
+    Called via flow-ref from BOTH:
+      - APIKit flows  (resume-ai-agent-api-v1.xml)
+      - MCP tool flows (mcp-server.xml)
+
+    Input contract:
+      - sub-flow-get-experience-by-company expects: vars.companyFilter (String)
+      - sub-flow-search-resume               expects: payload.keyword   (String)
+      - All other sub-flows: no input required (read directly from classpath)
+    =============================================================
+    -->
+
+    <!-- =========================================================
+         PROFILE
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-profile"
+              doc:name="Sub-flow: Get Profile"
+              doc:description="Returns full professional profile from resume-data.json">
+        <ee:transform doc:name="Extract Profile Section">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+output application/json
+---
+{
+    data: resumeData.profile,
+    meta: {
+        section: "profile",
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         EXPERIENCE (all)
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-experience"
+              doc:name="Sub-flow: Get All Experience"
+              doc:description="Returns complete work experience across all companies">
+        <ee:transform doc:name="Extract All Experience">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+output application/json
+---
+{
+    data: resumeData.experience,
+    meta: {
+        section: "experience",
+        totalCompanies: sizeOf(resumeData.experience),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         EXPERIENCE BY COMPANY
+         Input: vars.companyFilter (set by caller before flow-ref)
+           - APIKit caller sets: attributes.uriParams.company
+           - MCP caller sets:    payload.company
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-experience-by-company"
+              doc:name="Sub-flow: Get Experience by Company"
+              doc:description="Filters work experience by company name. Caller must set vars.companyFilter before invoking.">
+        <ee:transform doc:name="Filter Experience by Company">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+var companyFilter = vars.companyFilter default ""
+var filtered = resumeData.experience filter (exp) ->
+    lower(exp.company) contains lower(companyFilter)
+output application/json
+---
+if (sizeOf(filtered) > 0)
+{
+    data: filtered,
+    meta: {
+        section: "experience",
+        filter: companyFilter,
+        resultsFound: sizeOf(filtered),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}
+else
+{
+    error: "No experience found for company: " ++ companyFilter,
+    availableCompanies: resumeData.experience.company,
+    suggestion: "Try: capgemini, deloitte, infosys, apisero, or accenture"
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         SKILLS
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-skills"
+              doc:name="Sub-flow: Get Skills"
+              doc:description="Returns all technical skills categorised by type">
+        <ee:transform doc:name="Extract Skills Section">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+output application/json
+---
+{
+    data: resumeData.skills,
+    meta: {
+        section: "skills",
+        totalCompetencies: sizeOf(resumeData.skills.competencies),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         EDUCATION
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-education"
+              doc:name="Sub-flow: Get Education"
+              doc:description="Returns education background">
+        <ee:transform doc:name="Extract Education Section">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+output application/json
+---
+{
+    data: resumeData.education,
+    meta: {
+        section: "education",
+        totalDegrees: sizeOf(resumeData.education),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         CERTIFICATIONS
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-certifications"
+              doc:name="Sub-flow: Get Certifications"
+              doc:description="Returns all certifications grouped by category">
+        <ee:transform doc:name="Extract Certifications">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+var certs = resumeData.certifications
+output application/json
+---
+{
+    data: certs,
+    summary: {
+        totalCertifications: sizeOf(certs),
+        byCategory: (certs groupBy (cert) -> cert.category)
+            mapObject ((certGroup, category) -> {
+                (category as String): sizeOf(certGroup)
+            })
+    },
+    meta: {
+        section: "certifications",
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         PROJECTS
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-projects"
+              doc:name="Sub-flow: Get Projects"
+              doc:description="Flattens all client engagements from experience into a project list">
+        <ee:transform doc:name="Extract Projects from Experience">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+var projects = resumeData.experience flatMap (exp) ->
+    exp.clients map (client) -> {
+        company: exp.company,
+        role: exp.role,
+        clientName: client.clientName,
+        project: client.project,
+        period: client.period,
+        description: client.description,
+        keyAchievements: client.keyAchievements,
+        technologies: client.technologies
+    }
+output application/json
+---
+{
+    data: projects,
+    meta: {
+        section: "projects",
+        totalProjects: sizeOf(projects),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         ACHIEVEMENTS
+    ========================================================== -->
+    <sub-flow name="sub-flow-get-achievements"
+              doc:name="Sub-flow: Get Achievements"
+              doc:description="Returns awards and professional interests">
+        <ee:transform doc:name="Extract Achievements">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+output application/json
+---
+{
+    data: resumeData.achievements,
+    interests: resumeData.interests,
+    meta: {
+        section: "achievements",
+        totalAwards: sizeOf(resumeData.achievements),
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+    <!-- =========================================================
+         SEARCH
+         Input: payload.keyword (String)
+           Both APIKit (POST body) and MCP (tool parameter) pass
+           the keyword as payload.keyword — no pre-processing needed.
+    ========================================================== -->
+    <sub-flow name="sub-flow-search-resume"
+              doc:name="Sub-flow: Search Resume"
+              doc:description="Full-text keyword search across all resume sections. Caller must provide payload.keyword.">
+        <ee:transform doc:name="Search Resume by Keyword">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+var resumeData = readUrl("classpath://data/resume-data.json", "application/json")
+var keyword = payload.keyword default ""
+var kw = lower(keyword)
+
+fun anyContains(arr, k) = !isEmpty(arr filter (item) -> lower(item default "") contains k)
+
+var matchedExperience = resumeData.experience flatMap (exp) ->
+    (exp.clients filter (client) ->
+        (lower(client.description default "") contains kw) or
+        (lower(client.project default "") contains kw) or
+        (lower(client.clientName default "") contains kw) or
+        anyContains(client.technologies default [], kw) or
+        anyContains(client.keyAchievements default [], kw)
+    ) map (client) -> {
+        section: "experience",
+        company: exp.company,
+        role: exp.role,
+        clientName: client.clientName,
+        project: client.project,
+        period: client.period,
+        matchedIn: "experience"
+    }
+
+var skillMatches = {
+    competencies: resumeData.skills.competencies filter (s) -> lower(s) contains kw,
+    integrationPlatforms: resumeData.skills.integrationPlatforms filter (s) -> lower(s) contains kw,
+    apiSecurity: resumeData.skills.apiSecurity filter (s) -> lower(s) contains kw,
+    cloudAndInfrastructure: resumeData.skills.cloudAndInfrastructure filter (s) -> lower(s) contains kw,
+    devopsAndCICD: resumeData.skills.devopsAndCICD filter (s) -> lower(s) contains kw,
+    toolsAndPlatforms: resumeData.skills.toolsAndPlatforms filter (s) -> lower(s) contains kw,
+    integrationPatterns: resumeData.skills.integrationPatterns filter (s) -> lower(s) contains kw
+} mapObject ((value, key) -> {
+    (key): value
+}) filterObject (value) -> !isEmpty(value)
+
+var matchedCerts = resumeData.certifications filter (cert) ->
+    (lower(cert.name default "") contains kw) or
+    (lower(cert.issuer default "") contains kw) or
+    (lower(cert.category default "") contains kw)
+
+var matchedAchievements = resumeData.achievements filter (ach) ->
+    (lower(ach.award default "") contains kw) or
+    (lower(ach.project default "") contains kw)
+
+var profileMatch =
+    (lower(resumeData.profile.summary default "") contains kw) or
+    anyContains(resumeData.profile.highlights default [], kw)
+
+output application/json
+---
+if (isEmpty(kw))
+{
+    error: "Please provide a keyword in the request body",
+    example: { keyword: "MuleSoft" }
+}
+else
+{
+    keyword: keyword,
+    results: {
+        profileMatch: profileMatch,
+        experience: matchedExperience,
+        skills: skillMatches,
+        certifications: matchedCerts,
+        achievements: matchedAchievements
+    },
+    summary: {
+        totalExperienceMatches: sizeOf(matchedExperience),
+        totalCertificationMatches: sizeOf(matchedCerts),
+        totalAchievementMatches: sizeOf(matchedAchievements),
+        profileSummaryMatch: profileMatch
+    },
+    meta: {
+        section: "search",
+        keyword: keyword,
+        retrievedAt: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"}
+    }
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </sub-flow>
+
+</mule>

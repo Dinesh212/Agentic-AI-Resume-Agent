@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:mcp="http://www.mulesoft.org/schema/mule/mcp"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/mcp http://www.mulesoft.org/schema/mule/mcp/current/mule-mcp.xsd">
+
+    <!-- MCP TOOL 1: get-profile -->
+    <flow name="mcp-tool-get-profile" doc:name="MCP: get-profile">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-profile" doc:name="MCP: get-profile">
+            <mcp:description>Get Dinesh Babu R full professional profile including name, title, contact details (email, phone, LinkedIn), 10-year career summary, current role as MuleSoft Technical Architect at Capgemini Singapore, industries served, and certification count.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-profile | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-profile" doc:name="sub-flow-get-profile"/>
+    </flow>
+
+    <!-- MCP TOOL 2: get-experience -->
+    <flow name="mcp-tool-get-experience" doc:name="MCP: get-experience">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-experience" doc:name="MCP: get-experience">
+            <mcp:description>Get all work experience across 5 companies: Capgemini Singapore (Jul 2025-Present, MuleSoft Technical Architect at Singapore Food Agency), Deloitte (Apr 2022-Jun 2025, clients: UGI, ASF, CCEP, Sasol, Unilever), Infosys (Sep 2021-Apr 2022, HSBC CloudHub migration), Apisero (Jun 2020-Sep 2021, Casper Sleep), Accenture (Jun 2016-Jun 2020, Ross Stores and Pfizer).</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-experience | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-experience" doc:name="sub-flow-get-experience"/>
+    </flow>
+
+    <!-- MCP TOOL 3: get-experience-by-company -->
+    <flow name="mcp-tool-get-experience-by-company" doc:name="MCP: get-experience-by-company">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-experience-by-company" doc:name="MCP: get-experience-by-company">
+            <mcp:description>Filter work experience by company name using case-insensitive partial match. Available: capgemini, deloitte, infosys, apisero, accenture.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{"company":{"type":"string","description":"Company name: capgemini, deloitte, infosys, apisero, accenture"}},"required":["company"]}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-experience-by-company | company=' ++ (payload.company default 'N/A') ++ ' | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <set-variable variableName="companyFilter"
+                      value="#[payload.company default '']"
+                      doc:name="Set companyFilter from MCP payload"/>
+        <flow-ref name="sub-flow-get-experience-by-company" doc:name="sub-flow-get-experience-by-company"/>
+    </flow>
+
+    <!-- MCP TOOL 4: get-skills -->
+    <flow name="mcp-tool-get-skills" doc:name="MCP: get-skills">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-skills" doc:name="MCP: get-skills">
+            <mcp:description>Get all technical skills: competencies (30 items), integration platforms (MuleSoft, Workato), API security (OAuth 2.0, JWT, mTLS), cloud infrastructure (AWS GCC, CloudHub 2.0), DevOps/CI/CD, and integration patterns (CQRS, DLQ, Watermarking).</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-skills | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-skills" doc:name="sub-flow-get-skills"/>
+    </flow>
+
+    <!-- MCP TOOL 5: get-education -->
+    <flow name="mcp-tool-get-education" doc:name="MCP: get-education">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-education" doc:name="MCP: get-education">
+            <mcp:description>Get education background: B.E. Mechatronics Engineering from Kongu Engineering College, Anna University, India (graduated 2016).</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-education | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-education" doc:name="sub-flow-get-education"/>
+    </flow>
+
+    <!-- MCP TOOL 6: get-certifications -->
+    <flow name="mcp-tool-get-certifications" doc:name="MCP: get-certifications">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-certifications" doc:name="MCP: get-certifications">
+            <mcp:description>Get all 13 certifications: MuleSoft 5x (Platform Architect 2024, Integration Architect 2026, Developer L1 2019, API Design 2019, Integration 2020), Salesforce 2x (Agentforce 2025, AI Associate 2025), AWS Cloud Practitioner 2024, Workato Automation Pro I/II/III 2023, Anthropic MCP Advanced 2026 and Intro 2026.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-certifications | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-certifications" doc:name="sub-flow-get-certifications"/>
+    </flow>
+
+    <!-- MCP TOOL 7: get-projects -->
+    <flow name="mcp-tool-get-projects" doc:name="MCP: get-projects">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-projects" doc:name="MCP: get-projects">
+            <mcp:description>Get all notable client projects with technologies. Covers Singapore Government (SFA), Energy (Sasol), FMCG (Unilever MDM, Coca-Cola CCEP eB2B), Financial Services (HSBC CloudHub migration), Retail (Casper Sleep, Ross Stores), and Non-profit (Australian Sports Foundation). Also includes the Agentic AI Resume Agent MCP Server project.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-projects | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-projects" doc:name="sub-flow-get-projects"/>
+    </flow>
+
+    <!-- MCP TOOL 8: get-achievements -->
+    <flow name="mcp-tool-get-achievements" doc:name="MCP: get-achievements">
+        <mcp:tool-listener config-ref="Mcp_Config" name="get-achievements" doc:name="MCP: get-achievements">
+            <mcp:description>Get professional awards: Deloitte Client Centricity Award (Sasol 2023), Deloitte Move the Dot (Unilever 2022), Infosys Glory Award (HSBC 2022), Apisero Raving Reviews (Casper Sleep 2021), Apisero Star Performer (2021), H-1B Visa Nominee (2022), C4E Framework Delivery (Capgemini 2025). Also includes professional interests in agentic integration and MCP-server architectures.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=get-achievements | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-get-achievements" doc:name="sub-flow-get-achievements"/>
+    </flow>
+
+    <!-- MCP TOOL 9: search-resume -->
+    <flow name="mcp-tool-search-resume" doc:name="MCP: search-resume">
+        <mcp:tool-listener config-ref="Mcp_Config" name="search-resume" doc:name="MCP: search-resume">
+            <mcp:description>Full-text keyword search across all resume sections (experience, skills, certifications, achievements). Case-insensitive. Try: MuleSoft, Salesforce, CloudHub, AWS, Singapore, DataWeave, SAP, HSBC, CQRS, OAuth, Agentforce, MCP.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{"keyword":{"type":"string","description":"Keyword to search: MuleSoft, AWS, CloudHub, Salesforce, Singapore, DataWeave, SAP, HSBC, MCP, Agentforce"}},"required":["keyword"]}]]></mcp:parameters-schema>
+            <mcp:responses>
+                <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
+            </mcp:responses>
+        </mcp:tool-listener>
+        <set-variable variableName="callerSource" value="MCP-AI-CLIENT" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[MCP-AI-CLIENT] tool=search-resume | keyword=' ++ (payload.keyword default 'N/A') ++ ' | session=' ++ (attributes.sessionId default 'N/A')]"
+                doc:name="Log MCP Tool Call" category="com.resume.mcp"/>
+        <flow-ref name="sub-flow-search-resume" doc:name="sub-flow-search-resume"/>
+    </flow>
+
+</mule>

@@ -1,0 +1,339 @@
+#%RAML 1.0
+title: Resume AI Agent API
+version: v1
+baseUri: http://localhost:8081/api/{version}
+mediaType: application/json
+
+description: |
+  Resume AI Agent API for Dinesh Babu R — MuleSoft Platform Architect & Senior Integration Consultant.
+  Exposes structured resume data as a queryable REST API with 10 endpoints covering profile,
+  experience, skills, education, certifications, projects, achievements, and keyword search.
+  Designed for integration with MCP (Model Context Protocol) servers and AI chat interfaces.
+
+/resume:
+  /health:
+    get:
+      displayName: Health Check
+      description: Returns API health status, version, owner, and list of all available endpoints.
+      responses:
+        200:
+          description: API is running
+          body:
+            application/json:
+              example: |
+                {
+                  "status": "UP",
+                  "api": "Resume AI Agent API",
+                  "version": "1.0.0",
+                  "owner": "Dinesh Babu R",
+                  "timestamp": "2026-07-24T12:00:00"
+                }
+
+  /profile:
+    get:
+      displayName: Get Full Profile
+      description: |
+        Returns Dinesh Babu R's full professional profile including name, title,
+        contact details (email, phone, LinkedIn), 10-year career summary, key highlights,
+        current role/employer, industries served, and certification count.
+      responses:
+        200:
+          description: Profile retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "name": "Dinesh Babu R",
+                    "title": "MuleSoft Platform Architect | Senior Integration Consultant | API & Cloud Architecture",
+                    "contact": {
+                      "email": "dinesh6.db@gmail.com",
+                      "phone": "+65 88478175",
+                      "linkedin": "linkedin.com/in/dinesh-babu-r-4a5117b0",
+                      "location": "Singapore"
+                    },
+                    "summary": "MuleSoft Integration Architect with 10+ years...",
+                    "totalYearsExperience": 10,
+                    "currentRole": "MuleSoft Technical Architect / Senior Consultant",
+                    "currentEmployer": "Capgemini Singapore Pte Ltd",
+                    "certificationCount": 11
+                  },
+                  "meta": {
+                    "section": "profile",
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /experience:
+    get:
+      displayName: Get All Experience
+      description: |
+        Returns complete work experience across 5 companies: Capgemini (2025-Present),
+        Deloitte (2022-2025), Infosys (2021-2022), Apisero (2020-2021), Accenture (2016-2020).
+        Each entry includes role, period, type, and client engagements with key achievements.
+      responses:
+        200:
+          description: Work experience retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": [
+                    {
+                      "company": "Capgemini Singapore Pte Ltd",
+                      "period": "Jul 2025 - Present",
+                      "role": "MuleSoft Technical Architect / Senior Consultant",
+                      "type": "Current",
+                      "clients": []
+                    }
+                  ],
+                  "meta": {
+                    "section": "experience",
+                    "totalCompanies": 5,
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+    /{company}:
+      uriParameters:
+        company:
+          description: Company name to filter by (case-insensitive partial match). Examples - capgemini, deloitte, infosys, apisero, accenture
+          type: string
+          example: capgemini
+      get:
+        displayName: Get Experience by Company
+        description: |
+          Returns work experience filtered by company name using case-insensitive partial match.
+          Returns an error with available companies if no match is found.
+        responses:
+          200:
+            description: Filtered experience retrieved successfully
+            body:
+              application/json:
+                example: |
+                  {
+                    "data": [
+                      {
+                        "company": "Capgemini Singapore Pte Ltd",
+                        "period": "Jul 2025 - Present",
+                        "role": "MuleSoft Technical Architect / Senior Consultant",
+                        "type": "Current",
+                        "clients": []
+                      }
+                    ],
+                    "meta": {
+                      "section": "experience",
+                      "filter": "capgemini",
+                      "resultsFound": 1,
+                      "retrievedAt": "2026-07-24T12:00:00"
+                    }
+                  }
+          404:
+            description: No experience found for the given company
+            body:
+              application/json:
+                example: |
+                  {
+                    "error": "No experience found for company: xyz",
+                    "availableCompanies": ["Capgemini Singapore Pte Ltd", "Deloitte Touche Tohmatsu India LLP"],
+                    "suggestion": "Try: capgemini, deloitte, infosys, apisero, or accenture"
+                  }
+
+  /skills:
+    get:
+      displayName: Get All Skills
+      description: |
+        Returns all technical skills categorised by type: competencies, integrationPlatforms,
+        apiAndMessaging, apiSecurity, cloudAndInfrastructure, platformAdministration,
+        integrationPatterns, devopsAndCICD, languagesAndTechnologies, toolsAndPlatforms.
+      responses:
+        200:
+          description: Skills retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": {
+                    "competencies": ["Enterprise Integration Architecture", "API-Led Connectivity"],
+                    "integrationPlatforms": ["MuleSoft Anypoint Platform (Mule 3.x / 4.x)"],
+                    "apiSecurity": ["OAuth 2.0", "JWT Bearer Token"],
+                    "cloudAndInfrastructure": ["AWS GCC", "CloudHub 2.0"]
+                  },
+                  "meta": {
+                    "section": "skills",
+                    "totalCompetencies": 30,
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /education:
+    get:
+      displayName: Get Education
+      description: |
+        Returns education background. B.E. Mechatronics Engineering from
+        Kongu Engineering College, Anna University (2016).
+      responses:
+        200:
+          description: Education retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": [
+                    {
+                      "degree": "B.E. Mechatronics Engineering",
+                      "institution": "Kongu Engineering College, Anna University",
+                      "year": "2016",
+                      "country": "India"
+                    }
+                  ],
+                  "meta": {
+                    "section": "education",
+                    "totalDegrees": 1,
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /certifications:
+    get:
+      displayName: Get All Certifications
+      description: |
+        Returns all 13 professional certifications with category grouping.
+        Categories: MuleSoft (5x), Salesforce (3x), Cloud (AWS), Integration (Workato 3x), AI (Anthropic 2x).
+      responses:
+        200:
+          description: Certifications retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": [
+                    {
+                      "name": "MuleSoft Certified Platform Architect - Level 1",
+                      "issuer": "MuleSoft / Salesforce",
+                      "year": "2024",
+                      "category": "MuleSoft"
+                    }
+                  ],
+                  "summary": {
+                    "totalCertifications": 13,
+                    "byCategory": {
+                      "MuleSoft": 5,
+                      "Salesforce": 3,
+                      "Cloud": 1,
+                      "Integration": 3,
+                      "AI": 2
+                    }
+                  },
+                  "meta": {
+                    "section": "certifications",
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /projects:
+    get:
+      displayName: Get All Projects
+      description: |
+        Returns all notable client projects flattened from work experience.
+        Each project includes company, role, clientName, project name, period,
+        description, keyAchievements, and technologies used.
+        Covers 8+ major engagements across Singapore Government, FMCG, Energy, Finance, Retail.
+      responses:
+        200:
+          description: Projects retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": [
+                    {
+                      "company": "Capgemini Singapore Pte Ltd",
+                      "role": "MuleSoft Technical Architect / Senior Consultant",
+                      "clientName": "Singapore Food Agency (SFA)",
+                      "project": "Enterprise Licensing Modernization",
+                      "period": "Jul 2025 - Present",
+                      "description": "Leading integration architecture for SFA platform modernization",
+                      "keyAchievements": [],
+                      "technologies": ["MuleSoft Anypoint Platform", "CloudHub 2.0"]
+                    }
+                  ],
+                  "meta": {
+                    "section": "projects",
+                    "totalProjects": 8,
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /achievements:
+    get:
+      displayName: Get Achievements & Awards
+      description: |
+        Returns all professional awards (Deloitte, Infosys, Apisero) and notable achievements.
+        Also includes professional interests and areas of exploration.
+      responses:
+        200:
+          description: Achievements retrieved successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "data": [
+                    {
+                      "award": "Deloitte Client Centricity Award",
+                      "project": "Sasol Project",
+                      "year": "2023",
+                      "company": "Deloitte"
+                    }
+                  ],
+                  "interests": ["Agentic integration patterns and MuleSoft-as-an-MCP-server architectures"],
+                  "meta": {
+                    "section": "achievements",
+                    "totalAwards": 7,
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+
+  /search:
+    post:
+      displayName: Search Resume by Keyword
+      description: |
+        Full-text keyword search across all resume sections: experience, skills,
+        certifications, and achievements. Returns matching items from each section
+        along with a summary of total matches. Case-insensitive.
+      responses:
+        200:
+          description: Search completed successfully
+          body:
+            application/json:
+              example: |
+                {
+                  "keyword": "MuleSoft",
+                  "results": {
+                    "profileMatch": true,
+                    "experience": [],
+                    "skills": {},
+                    "certifications": [],
+                    "achievements": []
+                  },
+                  "summary": {
+                    "totalExperienceMatches": 5,
+                    "totalCertificationMatches": 5,
+                    "totalAchievementMatches": 0,
+                    "profileSummaryMatch": true
+                  },
+                  "meta": {
+                    "section": "search",
+                    "keyword": "MuleSoft",
+                    "retrievedAt": "2026-07-24T12:00:00"
+                  }
+                }
+        400:
+          description: Missing or empty keyword
+          body:
+            application/json:
+              example: |
+                {
+                  "error": "Please provide a keyword in the request body",
+                  "example": { "keyword": "MuleSoft" }
+                }

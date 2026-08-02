@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core"
+      xmlns:http="http://www.mulesoft.org/schema/mule/http"
+      xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+      xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+      xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+        http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+        http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+
+    <!-- ============================================================
+         MAIN FLOW — Single HTTP Listener + APIKit Router
+    ============================================================ -->
+    <flow name="resume-ai-agent-api-v1-main" doc:name="Resume AI Agent API Main Flow">
+        <http:listener config-ref="HTTP_Listener_config" path="/api/v1/*" doc:name="HTTP Listener /api/v1/*"/>
+        <apikit:router config-ref="api-config" doc:name="APIKit Router"/>
+        <error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST" doc:name="400 Bad Request">
+                <ee:transform doc:name="400 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Bad Request", message: error.description }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[400]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND" doc:name="404 Not Found">
+                <ee:transform doc:name="404 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Not Found", message: "The requested endpoint does not exist" }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[404]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED" doc:name="405 Method Not Allowed">
+                <ee:transform doc:name="405 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Method Not Allowed", message: error.description }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[405]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE" doc:name="406 Not Acceptable">
+                <ee:transform doc:name="406 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Not Acceptable", message: error.description }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[406]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE" doc:name="415 Unsupported Media Type">
+                <ee:transform doc:name="415 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Unsupported Media Type", message: error.description }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[415]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED" doc:name="501 Not Implemented">
+                <ee:transform doc:name="501 Response">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{ error: "Not Implemented", message: error.description }]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus"><![CDATA[501]]></ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/health  (inline — no shared sub-flow)
+    ============================================================ -->
+    <flow name="get:\resume\health:api-config" doc:name="GET /resume/health">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] health-check | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <ee:transform doc:name="Build Health Response">
+            <ee:message>
+                <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+    status: "UP",
+    api: "Resume AI Agent API",
+    version: "1.0.0",
+    owner: "Dinesh Babu R",
+    timestamp: now() as String {format: "yyyy-MM-dd'T'HH:mm:ss"},
+    endpoints: [
+        "GET /api/v1/resume/profile",
+        "GET /api/v1/resume/experience",
+        "GET /api/v1/resume/experience/{company}",
+        "GET /api/v1/resume/skills",
+        "GET /api/v1/resume/education",
+        "GET /api/v1/resume/certifications",
+        "GET /api/v1/resume/projects",
+        "GET /api/v1/resume/achievements",
+        "POST /api/v1/resume/search"
+    ]
+}]]></ee:set-payload>
+            </ee:message>
+        </ee:transform>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/profile
+    ============================================================ -->
+    <flow name="get:\resume\profile:api-config" doc:name="GET /resume/profile">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-profile | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-profile" doc:name="sub-flow-get-profile"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/experience
+    ============================================================ -->
+    <flow name="get:\resume\experience:api-config" doc:name="GET /resume/experience">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-experience | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-experience" doc:name="sub-flow-get-experience"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/experience/{company}
+    ============================================================ -->
+    <flow name="get:\resume\experience\(company):api-config" doc:name="GET /resume/experience/{company}">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-experience-by-company | path=' ++ (attributes.requestPath default 'N/A') ++ ' | company=' ++ (attributes.uriParams.company default 'N/A')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <set-variable variableName="companyFilter"
+                      value="#[attributes.uriParams.company default '']"
+                      doc:name="Set companyFilter from URI param"/>
+        <flow-ref name="sub-flow-get-experience-by-company" doc:name="sub-flow-get-experience-by-company"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/skills
+    ============================================================ -->
+    <flow name="get:\resume\skills:api-config" doc:name="GET /resume/skills">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-skills | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-skills" doc:name="sub-flow-get-skills"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/education
+    ============================================================ -->
+    <flow name="get:\resume\education:api-config" doc:name="GET /resume/education">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-education | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-education" doc:name="sub-flow-get-education"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/certifications
+    ============================================================ -->
+    <flow name="get:\resume\certifications:api-config" doc:name="GET /resume/certifications">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-certifications | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-certifications" doc:name="sub-flow-get-certifications"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/projects
+    ============================================================ -->
+    <flow name="get:\resume\projects:api-config" doc:name="GET /resume/projects">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-projects | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-projects" doc:name="sub-flow-get-projects"/>
+    </flow>
+
+    <!-- ============================================================
+         GET /api/v1/resume/achievements
+    ============================================================ -->
+    <flow name="get:\resume\achievements:api-config" doc:name="GET /resume/achievements">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#['[REST-API] get-achievements | path=' ++ (attributes.requestPath default 'N/A') ++ ' | method=' ++ (attributes.method default 'GET')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-get-achievements" doc:name="sub-flow-get-achievements"/>
+    </flow>
+
+    <!-- ============================================================
+         POST /api/v1/resume/search
+    ============================================================ -->
+    <flow name="post:\resume\search:api-config" doc:name="POST /resume/search">
+        <set-variable variableName="callerSource" value="REST-API" doc:name="Set Caller Source"/>
+        <logger level="INFO"
+                message="#[output application/java --- var kw = try(() -> (payload as Object).keyword as String) --- '[REST-API] search-resume | path=' ++ (attributes.requestPath default 'N/A') ++ ' | keyword=' ++ (kw.result default 'N/A')]"
+                doc:name="Log REST API Call" category="com.resume.api"/>
+        <flow-ref name="sub-flow-search-resume" doc:name="sub-flow-search-resume"/>
+    </flow>
+
+</mule>

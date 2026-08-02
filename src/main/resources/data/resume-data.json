@@ -1,0 +1,546 @@
+{
+  "profile": {
+      "name": "Dinesh Babu R",
+      "title": "MuleSoft Integration Architect | Senior Integration Consultant | API & Cloud Architecture",
+      "contact": {
+          "email": "dinesh6.db@gmail.com",
+          "phone": "+65 88478175",
+          "linkedin": "linkedin.com/in/dinesh-babu-r-4a5117b0",
+          "location": "Singapore",
+          "visaStatus": "Employment Pass Holder"
+      },
+      "summary": "MuleSoft Integration Architect with 10+ years architecting and delivering enterprise-grade integration programmes across Singapore Government, Financial Services, Retail, Energy, and FMCG. Expert in API-led connectivity, CloudHub 1.0 & 2.0 platform design, enterprise API governance, and full-lifecycle integration programme delivery at scale. Actively applying AI-driven integration patterns including MCP (Model Context Protocol) server architectures to enterprise automation use cases.",
+      "highlights": [
+          "MuleSoft & Salesforce Certified (7x) | AWS Certified Cloud Practitioner | Workato Automation Pro (3x)",
+          "Established and led Center for Enablement (C4E) frameworks - global error handling, notification, logging, and reusable project templates - adopted across programme teams",
+          "Proven track record leading 6-member integration squads on mission-critical government and enterprise programmes",
+          "Deep specialization in Singapore Government cloud delivery (AWS GCC, GovTech APEX API Gateway, SHIP-HATS GitLab CI/CD, IM8 compliance)",
+          "Experienced in securing and governing 100+ APIs with OAuth 2.0, mTLS, SLA tiers, and API threat protection"
+      ],
+      "totalYearsExperience": 10,
+      "currentRole": "MuleSoft Technical Architect / Senior Consultant",
+      "currentEmployer": "Capgemini Singapore Pte Ltd",
+      "certificationCount": 11,
+      "industriesServed": [
+          "Singapore Government",
+          "Financial Services",
+          "Retail",
+          "Energy",
+          "FMCG"
+      ]
+  },
+  "skills": {
+      "competencies": [
+          "MuleSoft Anypoint Platform",
+          "Enterprise Integration Architecture",
+          "API-Led Connectivity",
+          "API Governance",
+          "Solution Architecture",
+          "Digital Transformation",
+          "Center for Enablement (C4E)",
+          "API Lifecycle & Standards",
+          "Cloud & Hybrid Integration",
+          "Microservices Architecture",
+          "Architecture Governance",
+          "Event-Driven Architecture",
+          "iPaaS",
+          "Data Integration / MDM",
+          "Integration Resilience",
+          "Batch & File Integration",
+          "High Availability",
+          "DataWeave 2.0",
+          "MUnit & Automated Testing",
+          "CI/CD Pipelines",
+          "DevOps",
+          "Cloud Infrastructure & Observability",
+          "Agentic AI Integration",
+          "SAP Integration",
+          "Salesforce Integration",
+          "Snowflake",
+          "AWS",
+          "CloudHub 2.0",
+          "API Security",
+          "Technical Leadership & Mentoring",
+          "Stakeholder Management",
+          "Agile Delivery",
+          "Pre-Sales Support",
+          "Non-Functional Requirements (NFR)"
+      ],
+      "integrationPlatforms": [
+          "MuleSoft Anypoint Platform (Mule 3.x / 4.x)",
+          "Workato",
+          "webMethods.io",
+          "Salesforce Public Sector Solutions (PSS)"
+      ],
+      "apiAndMessaging": [
+          "REST",
+          "SOAP",
+          "RAML 1.0",
+          "OAS 3.0",
+          "AsyncAPI 2.6",
+          "Anypoint MQ",
+          "RabbitMQ",
+          "GovTech APEX API Gateway"
+      ],
+      "apiSecurity": [
+          "OAuth 2.0",
+          "JWT Bearer Token",
+          "Client ID Enforcement",
+          "mTLS (Mutual TLS)",
+          "SLA Tiers",
+          "Rate Limiting",
+          "IP Allowlisting",
+          "Secure Properties Encryption",
+          "API Threat Protection Policies"
+      ],
+      "cloudAndInfrastructure": [
+          "AWS GCC",
+          "AWS CloudWatch",
+          "AWS SES",
+          "GovTech CFT (Cloud File Transfer)",
+          "CloudHub 2.0 (VPC, Private Space, Custom Domain, Dedicated Load Balancer)",
+          "CloudHub 1.0",
+          "Hybrid / On-Premise Mule Runtime"
+      ],
+      "platformAdministration": [
+          "Anypoint Platform Admin (Business Groups, Environments, Teams, Access Management)",
+          "Anypoint API Manager",
+          "Anypoint Monitoring",
+          "Anypoint Visualizer",
+          "Anypoint Exchange"
+      ],
+      "integrationPatterns": [
+          "API-Led Connectivity",
+          "Publish-Subscribe",
+          "Request-Reply",
+          "Event-Driven",
+          "Circuit Breaker",
+          "Idempotent Consumer",
+          "Dead Letter Queue (DLQ)",
+          "Watermarking",
+          "Batch Processing",
+          "CQRS"
+      ],
+      "devopsAndCICD": [
+          "Jenkins",
+          "Azure DevOps",
+          "Bamboo",
+          "Maven",
+          "Git",
+          "GitHub Actions",
+          "Travis CI",
+          "Bitbucket Pipelines",
+          "SGTech SHIP-HATS GitLab CI/CD"
+      ],
+      "languagesAndTechnologies": [
+          "DataWeave 2.0 (custom modules, streaming, MUnit-tested)",
+          "XML",
+          "JSON",
+          "SQL",
+          "YAML"
+      ],
+      "toolsAndPlatforms": [
+          "Anypoint Studio",
+          "MUnit",
+          "Postman",
+          "JMeter",
+          "Splunk",
+          "Elasticsearch",
+          "Anypoint Monitoring",
+          "JIRA",
+          "Confluence",
+          "WinSCP",
+          "PGP Encryption"
+      ]
+  },
+  "experience": [
+  {
+      "company": "Capgemini Singapore Pte Ltd",
+      "period": "Jul 2025 - Present",
+      "role": "MuleSoft Technical Architect / Senior Consultant",
+      "type": "Current",
+      "clients": [
+          {
+              "clientName": "Singapore Food Agency (SFA)",
+              "project": "Enterprise Licensing Modernization",
+              "period": "Jul 2025 - Present",
+              "description": "Leading the integration architecture for SFA enterprise platform modernization, consolidating legacy L1 (Licensing), IFAST (Inspection), and EMS (Enforcement) systems into a unified Salesforce PSS platform with MuleSoft Anypoint Platform as the integration middleware layer.",
+              "keyAchievements": [
+                  "Consolidated 3 legacy systems (L1 Licensing, IFAST Inspection, EMS Enforcement) into a unified Salesforce PSS platform enabling centralized licensing operations and eliminating cross-system data reconciliation across 100+ regulated licensing workflows",
+                  "Architected and delivered multiple API assets across System, Process, and Experience layers enabling real-time data synchronization and business-process automation across consolidated government licensing systems",
+                  "Led and mentored a team of 3 MuleSoft developers conducting architecture reviews, enforcing integration coding standards, and improving delivery velocity through structured sprint planning",
+                  "Architected CloudHub 2.0 VPC, Private Space, and Custom Domain environments ensuring government-grade network isolation and compliance with Singapore Government cloud (AWS GCC) standards",
+                  "Established reusable C4E assets: global error handling, centralized notifications, structured logging with AWS CloudWatch, and standardized project templates published to Anypoint Exchange",
+                  "Designed enterprise API security strategy protecting 100+ interfaces with OAuth 2.0, mTLS, Client ID enforcement, SLA tiers, rate limiting, and API threat protection",
+                  "Led Integration Architecture reviews with SFA Enterprise Architects and GovTech Design Authority defining NFR standards for API performance, availability, and security compliance",
+                  "Designed bi-directional secure network topology between CloudHub 2.0 and Salesforce PSS resolving Salesforce dynamic IP constraint via AWS GCC API Gateway with IP allowlisting",
+                  "Integrated AWS CloudWatch, AWS SES, and GovTech APEX API Gateway for regulated government-to-platform communication per IM8 standards",
+                  "Set up SGTech SHIP-HATS GitLab CI/CD pipelines for automated builds, MUnit test execution, and CloudHub 2.0 deployments via Anypoint CLI",
+                  "Implemented GovTech CFT integration with PGP encryption for secure cross-agency file exchange meeting IM8 data security standards",
+                  "Authored Integration Reference Architecture, HLD/LLD documents, and API design guidelines adopted as programme standards",
+                  "Architected CloudHub 2.0 platform targeting 99.9% availability and sub-500ms API response times with autoscaling and right-sized replica configurations"
+              ],
+              "technologies": [
+                  "MuleSoft Anypoint Platform",
+                  "CloudHub 2.0",
+                  "Salesforce PSS",
+                  "AWS GCC",
+                  "AWS CloudWatch",
+                  "AWS SES",
+                  "GovTech APEX",
+                  "GovTech CFT",
+                  "SHIP-HATS GitLab CI/CD",
+                  "PGP Encryption"
+              ]
+          }
+      ]
+  },
+  {
+      "company": "Deloitte Touche Tohmatsu India LLP",
+      "period": "Apr 2022 - Jun 2025",
+      "role": "Consulting Manager / Senior Consultant",
+      "type": "Previous",
+      "teamContext": "Delivered 5 client integration programmes as Consulting Manager supervising 2-6 developer resources per engagement, managing concurrent multi-client workstreams, and serving as primary integration architect.",
+      "clients": [
+          {
+              "clientName": "UGI Corporation",
+              "project": "Salesforce-Snowflake Data Synchronization",
+              "period": "Feb 2025 - Jun 2025",
+              "description": "Designed and implemented a Salesforce-to-Snowflake data synchronization platform using Salesforce Bulk API, enabling high-volume analytics pipelines for BI and reporting.",
+              "keyAchievements": [
+                  "Applied Anypoint Object Store v2 watermarking pattern to extract only delta records, significantly reducing API call volume and data transfer costs",
+                  "Implemented CQRS-aligned data architecture to decouple Snowflake read-optimized reporting from the Salesforce transactional system"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "Salesforce Bulk API",
+                  "Snowflake",
+                  "Anypoint Object Store v2",
+                  "CQRS"
+              ]
+          },
+          {
+              "clientName": "Australian Sports Foundation (ASF)",
+              "project": "End-to-End IPaaS Integration",
+              "period": "Sep 2024 - Feb 2025",
+              "description": "Architected and led the end-to-end MuleSoft IPaaS integration for ASF, connecting 7+ platforms including Salesforce, Amazon S3, Stripe, Xero, Ortto, DatoCMS, and Adatree.",
+              "keyAchievements": [
+                  "Designed and delivered 10+ integration flows automating donation processing, grant management, and financial reconciliation reducing manual processing effort by approximately 60%",
+                  "Implemented event-driven and webhook-based integration patterns for real-time data consistency across payment and grants management platforms",
+                  "Applied idempotent consumer pattern to prevent duplicate transaction processing for payment events from Stripe"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "Salesforce",
+                  "Amazon S3",
+                  "Stripe",
+                  "Xero",
+                  "Ortto",
+                  "DatoCMS",
+                  "Adatree"
+              ]
+          },
+          {
+              "clientName": "Coca-Cola Euro Pacific Partners (CCEP)",
+              "project": "Global eB2B Marketplace Integration",
+              "period": "Dec 2023 - Aug 2024",
+              "description": "Architected and delivered a global eB2B marketplace integration using webMethods.io iPaaS, connecting Salesforce B2B Commerce, Mirakl, TelyNET, and SAP ERP across multiple international markets.",
+              "keyAchievements": [
+                  "Standardized supplier onboarding and product catalogue synchronization workflows supporting both Non-CCEP and CCEP suppliers across multiple international markets",
+                  "Delivered complex data transformation mappings between heterogeneous data models (Salesforce, SAP IDOC/RFC, Mirakl API)",
+                  "Implemented error handling, retry strategies, and DLQ patterns for resilient order processing"
+              ],
+              "technologies": [
+                  "webMethods.io",
+                  "Salesforce B2B Commerce",
+                  "Mirakl",
+                  "SAP ERP",
+                  "TelyNET"
+              ]
+          },
+          {
+              "clientName": "Sasol Limited",
+              "project": "Warehouse Inventory Digitization",
+              "period": "Mar 2023 - Jul 2023",
+              "description": "Delivered a warehouse inventory digitization and automation solution for Sasol, eliminating manual paper-based MM-IM inventory management processes.",
+              "keyAchievements": [
+                  "Architected MuleSoft as a secure integration proxy between the Dcode Mobility Application and SAP ERP, exposing SAP BAPI structures via REST APIs for real-time inventory scanning",
+                  "Designed centralized error handling, structured logging, and notification framework for operational visibility"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "SAP ERP",
+                  "SAP BAPI",
+                  "REST APIs",
+                  "Dcode Mobility"
+              ]
+          },
+          {
+              "clientName": "Unilever",
+              "project": "MPower / CRETA Master Data Management",
+              "period": "Apr 2022 - Nov 2023",
+              "description": "Contributed to Unilever global MPower MDM program, driving data standardization across customer, material, and vendor master data domains.",
+              "keyAchievements": [
+                  "Delivered the CRETA Project automating Customer Master Data creation using PEGA, MuleSoft, SAP ECC, and Informatica MDM/IDQ",
+                  "Designed API-led integration flows ensuring validated master data propagation across 10+ global SAP landscapes",
+                  "Applied data quality validation and idempotency patterns to ensure reliable, duplicate-free master data distribution"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "SAP ECC",
+                  "PEGA",
+                  "Informatica MDM/IDQ"
+              ]
+          }
+      ]
+  },
+  {
+      "company": "Infosys Limited",
+      "period": "Sep 2021 - Apr 2022",
+      "role": "Senior Associate Consultant",
+      "type": "Previous",
+      "clients": [
+          {
+              "clientName": "HSBC",
+              "project": "Mule Runtime Upgrade & CloudHub Migration",
+              "period": "Sep 2021 - Apr 2022",
+              "description": "Executed a large-scale Mule Runtime Upgrade & CloudHub Migration project, decommissioning PCE infrastructure and migrating 50+ microservices to CloudHub Control Plane.",
+              "keyAchievements": [
+                  "Performed runtime upgrade from Mule 3.8.5 to 3.9.5 ensuring backward compatibility, regression testing, and zero-downtime migration for a tier-1 financial services client",
+                  "Validated post-migration application performance and SLA compliance using JMeter load testing and CloudHub monitoring",
+                  "Documented migration runbooks, rollback procedures, and post-migration operational guidelines"
+              ],
+              "technologies": [
+                  "MuleSoft Mule 3.x",
+                  "CloudHub",
+                  "JMeter",
+                  "PCE Migration"
+              ]
+          }
+      ]
+  },
+  {
+      "company": "Apisero Global Integration Solutions Pvt Ltd",
+      "period": "Jun 2020 - Sep 2021",
+      "role": "Lead Engineer",
+      "type": "Previous",
+      "clients": [
+          {
+              "clientName": "Casper Sleep",
+              "project": "Wholesale Order Fulfilment Platform",
+              "period": "Jun 2020 - Sep 2021",
+              "description": "Built a Wholesale Order Fulfilment Platform integrating JD Edwards ERP with multiple third-party systems using MuleSoft API-led connectivity enabling end-to-end order placement, fulfilment, and shipment tracking.",
+              "keyAchievements": [
+                  "Designed end-to-end order placement, fulfilment, and shipment tracking APIs for Casper Sleep's B2B distribution network using System, Process, and Experience layers"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "JD Edwards ERP",
+                  "REST APIs",
+                  "API-Led Connectivity"
+              ]
+          }
+      ]
+  },
+  {
+      "company": "Accenture Solutions Pvt Ltd",
+      "period": "Jun 2016 - Jun 2020",
+      "role": "Application Development Analyst / Application Development Associate",
+      "type": "Previous",
+      "clients": [
+          {
+              "clientName": "Ross Stores",
+              "project": "Retail Domain Service Application",
+              "period": "Jun 2018 - Jun 2020",
+              "description": "Developed a Retail Domain Service Application using Microservices Architecture (MuleSoft API layer, Spring Boot, AngularJS 4.0) to streamline supplier ordering and returns management.",
+              "keyAchievements": [
+                  "Designed MuleSoft integration APIs to streamline supplier ordering and returns management, replacing the legacy monolithic system",
+                  "Implemented RESTful API contracts using RAML 1.0, published to Anypoint Exchange for team-wide reuse and governance"
+              ],
+              "technologies": [
+                  "MuleSoft",
+                  "AngularJS 4.0",
+                  "Spring Boot",
+                  "RAML 1.0",
+                  "Anypoint Exchange"
+              ]
+          },
+          {
+              "clientName": "Pfizer",
+              "project": "IT Infrastructure Monitoring",
+              "period": "Jun 2016 - May 2018",
+              "description": "Maintained distributed IT infrastructure availability using HP SiteScope monitoring across a global pharmaceutical environment.",
+              "keyAchievements": [
+                  "Managed servers, network devices, and application services and developed alert configurations to reduce incident detection time"
+              ],
+              "technologies": [
+                  "HP SiteScope",
+                  "Infrastructure Monitoring",
+                  "Alert Management"
+              ]
+          }
+      ]
+  }
+  ],
+  "education": [
+      {
+          "degree": "B.E. Mechatronics Engineering",
+          "institution": "Kongu Engineering College, Anna University",
+          "year": "2016",
+          "country": "India"
+      }
+  ],
+  "certifications": [
+      {
+          "name": "MuleSoft Certified Platform Architect",
+          "issuer": "MuleSoft / Salesforce",
+          "year": "2024",
+          "category": "MuleSoft"
+      },
+      {
+          "name": "Salesforce Certified MuleSoft Platform Integration Architect",
+          "issuer": "Salesforce",
+          "year": "2026",
+          "category": "Salesforce"
+      },
+      {
+          "name": "AWS Certified Cloud Practitioner",
+          "issuer": "Amazon Web Services",
+          "year": "2024",
+          "category": "Cloud"
+      },
+      {
+          "name": "Workato Automation Pro I",
+          "issuer": "Workato",
+          "year": "2023",
+          "category": "Integration"
+      },
+      {
+          "name": "Workato Automation Pro II",
+          "issuer": "Workato",
+          "year": "2023",
+          "category": "Integration"
+      },
+      {
+          "name": "Workato Automation Pro III",
+          "issuer": "Workato",
+          "year": "2023",
+          "category": "Integration"
+      },
+      {
+          "name": "Salesforce Agentforce Specialist",
+          "issuer": "Salesforce",
+          "year": "2025",
+          "category": "Salesforce"
+      },
+      {
+          "name": "Salesforce AI Associate",
+          "issuer": "Salesforce",
+          "year": "2025",
+          "category": "Salesforce"
+      },
+      {
+          "name": "MuleSoft Certified Developer - Level 1 (Mule 4)",
+          "issuer": "MuleSoft / Salesforce",
+          "year": "2019",
+          "category": "MuleSoft"
+      },
+      {
+          "name": "MuleSoft Certified Developer - Integration and API Associate (Mule 3.9)",
+          "issuer": "MuleSoft / Salesforce",
+          "year": "2020",
+          "category": "MuleSoft"
+      },
+      {
+          "name": "MuleSoft Certified Developer - API Design Associate (RAML 1.0)",
+          "issuer": "MuleSoft / Salesforce",
+          "year": "2019",
+          "category": "MuleSoft"
+      },
+      {
+          "name": "Model Context Protocol: Advanced Topics",
+          "issuer": "Anthropic",
+          "year": "2026",
+          "category": "AgenticAI"
+      },
+      {
+          "name": "Introduction to Model Context Protocol (MCP)",
+          "issuer": "Anthropic",
+          "year": "2026",
+          "category": "AgenticAI"
+      }
+  ],
+  "achievements": [
+      {
+          "award": "Deloitte Client Centricity Award",
+          "project": "Sasol Project",
+          "year": "2023",
+          "company": "Deloitte"
+      },
+      {
+          "award": "Deloitte Move the Dot Award",
+          "project": "Unilever CRETA Project",
+          "year": "2022",
+          "company": "Deloitte"
+      },
+      {
+          "award": "Infosys Glory Award",
+          "project": "HSBC Migration Project",
+          "year": "2022",
+          "company": "Infosys"
+      },
+      {
+          "award": "Apisero Raving Reviews Award",
+          "project": "Casper Sleep",
+          "year": "2021",
+          "company": "Apisero"
+      },
+      {
+          "award": "Apisero Star Performer Award",
+          "project": "Casper Sleep",
+          "year": "2021",
+          "company": "Apisero"
+      },
+      {
+          "award": "H-1B Visa Nominee",
+          "project": "Recognition for technical excellence",
+          "year": "2022",
+          "company": "Infosys"
+      },
+      {
+          "award": "C4E Integration Framework Delivery",
+          "project": "Architected and delivered C4E integration frameworks (global error handling, notification, logging) at Capgemini",
+          "year": "2025",
+          "company": "Capgemini"
+      }
+  ],
+  "projects": [
+      {
+          "name": "Agentic AI Resume Agent - MuleSoft MCP Server (MCP Bridge & Connector)",
+          "year": "2026",
+          "category": "AI Integration Innovation",
+          "description": "Built a dual-mode MuleSoft integration application exploring two agentic AI integration approaches - MCP Bridge (wrapping an existing REST API) and MCP Connector (native MCP Server), both exposing structured resume data as AI-queryable tools via natural language.",
+          "keyAchievements": [
+              "Implemented MCP Bridge approach via Anypoint API Manager Agent and Tool Instances, wrapping an existing RAML 1.0 REST API (10 endpoints) as an MCP-compatible agent enabling AI clients to query without code changes",
+              "Configured 6 inbound MCP policies on the MCP Bridge instance: MCP Support, MCP Tool Mapping, MCP Schema Validation, MCP Transcoding Router, MCP Tools Progressive Disclosure, and MCP Payload Optimization via Anypoint Omni Gateway",
+              "Implemented MCP Connector approach using MuleSoft MCP Connector with 9 tools over Streamable HTTP transport, enabling AI clients to query structured resume data conversationally",
+              "Designed RAML 1.0 API specification with APIKit Router pattern covering profile, experience, skills, certifications, achievements, and full-text keyword search endpoints",
+              "Deployed to CloudHub 2.0 and validated with Postman (HTTP & MCP transport); both approaches verified against MCP Inspector, Claude Desktop, and VS Code MuleSoft Developer Agent (Agentforce)"
+          ],
+          "technologies": [
+              "MuleSoft MCP Connector 1.6.1",
+              "Anypoint API Manager",
+              "Anypoint Omni Gateway",
+              "RAML 1.0",
+              "DataWeave 2.0",
+              "CloudHub 2.0",
+              "Java 17",
+              "Postman"
+          ]
+      }
+  ],
+  "interests": [
+      "Continuous upskilling in cloud-native architectures, agentic AI integration (MCP), API security (OAuth 2.0, mTLS), Runtime Fabric, and enterprise integration governance",
+      "Interested in financial markets, technology trends, and digital innovation in APAC"
+  ]
+}

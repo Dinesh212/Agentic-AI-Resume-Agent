@@ -1,0 +1,33 @@
+{
+  "_comment": "Resume AI Agent MCP Server — Claude Desktop Configuration",
+  "_instructions": [
+    "1. Run the Mule application in Anypoint Studio (Right-click project → Run As → Mule Application)",
+    "2. Wait for 'DEPLOYED' status in console",
+    "3. Copy the 'mcpServers' block below into your Claude Desktop config file:",
+    "   Windows: %APPDATA%\\Claude\\claude_desktop_config.json",
+    "   macOS:   ~/Library/Application Support/Claude/claude_desktop_config.json",
+    "4. Restart Claude Desktop",
+    "5. Look for the hammer icon (MCP tools) in the chat window",
+    "6. Ask: 'Who is Dinesh Babu R?' or 'What are his MuleSoft certifications?'"
+  ],
+  "mcpServers": {
+    "resume-ai-agent": {
+      "url": "http://localhost:8082/mcp"
+    }
+  },
+  "_availableTools": [
+    "get-profile — Full professional profile",
+    "get-experience — All work experience across 5 companies",
+    "get-experience-by-company — Filter by company name (capgemini, deloitte, etc.)",
+    "get-skills — All technical skills and competencies",
+    "get-education — Education background",
+    "get-certifications — All 13 certifications",
+    "get-projects — All client projects with technologies",
+    "get-achievements — Awards and professional interests",
+    "search-resume — Keyword search across all sections"
+  ],
+  "_ports": {
+    "restApi": "http://localhost:8081/api/v1/resume/*",
+    "mcpServer": "http://localhost:8082/mcp"
+  }
+}

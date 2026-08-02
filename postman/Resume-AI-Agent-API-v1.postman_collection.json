@@ -1,0 +1,726 @@
+{
+  "info": {
+    "_postman_id": "resume-ai-agent-api-v1",
+    "name": "Resume AI Agent API v1 - Dinesh Babu R",
+    "description": "Complete Postman collection for the Resume AI Agent API. Exposes Dinesh Babu R's resume as a queryable REST API with 10 endpoints covering profile, experience, skills, education, certifications, projects, achievements, and full-text keyword search.\n\nBase URL: {{baseUrl}}\nPort: 8081\n\n**Before testing:** Start the Mule application in Anypoint Code Builder (Run Mule Application), then import the local environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health & Monitoring",
+      "description": "API health check endpoints",
+      "item": [
+        {
+          "name": "GET Health Check",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "health"]
+            },
+            "description": "Returns API health status, version, owner, and list of all available endpoints."
+          },
+          "response": [
+            {
+              "name": "200 OK - API is up",
+              "originalRequest": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/resume/health",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "v1", "resume", "health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"status\": \"UP\",\n  \"api\": \"Resume AI Agent API\",\n  \"version\": \"1.0.0\",\n  \"owner\": \"Dinesh Babu R\",\n  \"timestamp\": \"2026-07-24T11:00:00\",\n  \"endpoints\": [\n    \"GET /api/v1/resume/profile\",\n    \"GET /api/v1/resume/experience\",\n    \"GET /api/v1/resume/experience/{company}\",\n    \"GET /api/v1/resume/skills\",\n    \"GET /api/v1/resume/education\",\n    \"GET /api/v1/resume/certifications\",\n    \"GET /api/v1/resume/projects\",\n    \"GET /api/v1/resume/achievements\",\n    \"POST /api/v1/resume/search\"\n  ]\n}"
+            }
+          ],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Status is UP', function() { var json = pm.response.json(); pm.expect(json.status).to.eql('UP'); });",
+                  "pm.test('Owner is Dinesh Babu R', function() { var json = pm.response.json(); pm.expect(json.owner).to.eql('Dinesh Babu R'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "description": "Get professional profile summary including name, title, contact, and career summary",
+      "item": [
+        {
+          "name": "GET Full Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "profile"]
+            },
+            "description": "Returns Dinesh Babu R's full professional profile: name, title, contact details (email, phone, LinkedIn), 10-year career summary, highlights, industries served, certifications count, current role and employer."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Name is Dinesh Babu R', function() { var json = pm.response.json(); pm.expect(json.data.name).to.eql('Dinesh Babu R'); });",
+                  "pm.test('Has contact info', function() { var json = pm.response.json(); pm.expect(json.data.contact).to.have.property('email'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Experience",
+      "description": "Work experience across 5 companies and 8+ client engagements",
+      "item": [
+        {
+          "name": "GET All Experience",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience"]
+            },
+            "description": "Returns all work experience: Capgemini (2025-Present), Deloitte (2022-2025), Infosys (2021-2022), Apisero (2020-2021), Accenture (2016-2020). Each entry includes role, period, and client engagements."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has experience data', function() { var json = pm.response.json(); pm.expect(json.data).to.be.an('array'); pm.expect(json.data.length).to.be.greaterThan(0); });",
+                  "pm.test('Has meta with totalCompanies', function() { var json = pm.response.json(); pm.expect(json.meta.totalCompanies).to.eql(5); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Experience - Capgemini",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/capgemini",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "capgemini"]
+            },
+            "description": "Filter experience by company: Capgemini (current). Returns MuleSoft Technical Architect role at Singapore Food Agency (SFA) Enterprise Licensing Modernization programme."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Company is Capgemini', function() { var json = pm.response.json(); pm.expect(json.data[0].company).to.include('Capgemini'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Experience - Deloitte",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/deloitte",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "deloitte"]
+            },
+            "description": "Filter experience by Deloitte. Returns Consulting Manager/Senior Consultant role with clients: UGI Corporation, Australian Sports Foundation, Coca-Cola Euro Pacific Partners, Sasol, Unilever."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has Deloitte experience', function() { var json = pm.response.json(); pm.expect(json.data[0].company).to.include('Deloitte'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Experience - Infosys",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/infosys",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "infosys"]
+            },
+            "description": "Filter experience by Infosys. Returns HSBC CloudHub migration project - migrated 50+ microservices from PCE to CloudHub."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Experience - Apisero",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/apisero",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "apisero"]
+            },
+            "description": "Filter experience by Apisero. Returns Casper Sleep Wholesale Order Fulfilment Platform project."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Experience - Accenture",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/accenture",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "accenture"]
+            },
+            "description": "Filter experience by Accenture. Returns Ross Stores Retail Domain Service Application and Pfizer IT Infrastructure Monitoring projects."
+          },
+          "response": []
+        },
+        {
+          "name": "GET Experience - Company Not Found",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/experience/unknowncompany",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "experience", "unknowncompany"]
+            },
+            "description": "Test the 'not found' response when searching for a company that doesn't exist in the resume."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns error for unknown company', function() { var json = pm.response.json(); pm.expect(json).to.have.property('error'); });",
+                  "pm.test('Suggests available companies', function() { var json = pm.response.json(); pm.expect(json).to.have.property('suggestion'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Skills",
+      "description": "Technical skills, competencies, platforms, tools, and patterns",
+      "item": [
+        {
+          "name": "GET All Skills",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/skills",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "skills"]
+            },
+            "description": "Returns all technical skills categorised by: competencies, integrationPlatforms, apiAndMessaging, apiSecurity, cloudAndInfrastructure, platformAdministration, integrationPatterns, devopsAndCICD, languagesAndTechnologies, toolsAndPlatforms."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has skills data', function() { var json = pm.response.json(); pm.expect(json.data).to.have.property('competencies'); pm.expect(json.data).to.have.property('integrationPlatforms'); pm.expect(json.data).to.have.property('apiSecurity'); });",
+                  "pm.test('Has 34 competencies', function() { var json = pm.response.json(); pm.expect(json.meta.totalCompetencies).to.eql(34); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Education",
+      "description": "Education background and qualifications",
+      "item": [
+        {
+          "name": "GET Education",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/education",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "education"]
+            },
+            "description": "Returns education background. B.E. Mechatronics Engineering from Kongu Engineering College, Anna University (2016)."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has education data', function() { var json = pm.response.json(); pm.expect(json.data).to.be.an('array'); pm.expect(json.data.length).to.be.greaterThan(0); });",
+                  "pm.test('Correct degree', function() { var json = pm.response.json(); pm.expect(json.data[0].degree).to.include('Mechatronics'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Certifications",
+      "description": "Professional certifications - MuleSoft, Salesforce, AWS, Workato, Anthropic",
+      "item": [
+        {
+          "name": "GET All Certifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/certifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "certifications"]
+            },
+            "description": "Returns all 13 certifications with category grouping. Includes: MuleSoft Platform Architect L1, Salesforce MuleSoft Integration Architect, AWS Cloud Practitioner, Workato Automation Pro I/II/III, Salesforce Agentforce Specialist, Salesforce AI Associate, Anthropic MCP (2x), MuleSoft Developer L1, API Design Associate, Integration & API Associate."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has certifications', function() { var json = pm.response.json(); pm.expect(json.data).to.be.an('array'); pm.expect(json.data.length).to.be.greaterThan(0); });",
+                  "pm.test('Has category summary', function() { var json = pm.response.json(); pm.expect(json.summary).to.have.property('byCategory'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "description": "Notable client projects with technologies used",
+      "item": [
+        {
+          "name": "GET All Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/projects",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "projects"]
+            },
+            "description": "Returns all notable client projects flattened from experience data. Each project includes: company, role, clientName, project, period, description, keyAchievements, and technologies used. 8+ major projects across Singapore Government, FMCG, Energy, Financial Services, and Retail sectors."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has projects data', function() { var json = pm.response.json(); pm.expect(json.data).to.be.an('array'); pm.expect(json.data.length).to.be.greaterThan(5); });",
+                  "pm.test('Each project has technologies', function() { var json = pm.response.json(); pm.expect(json.data[0]).to.have.property('technologies'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Achievements",
+      "description": "Professional awards and achievements",
+      "item": [
+        {
+          "name": "GET Achievements & Awards",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/achievements",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "achievements"]
+            },
+            "description": "Returns all professional awards: Deloitte Client Centricity Award, Deloitte Move the Dot Award, Infosys Glory Award, Apisero Raving Reviews Award, Apisero Star Performer Award, H-1B Visa Nominee, C4E Framework Delivery recognition. Also includes professional interests."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has achievements data', function() { var json = pm.response.json(); pm.expect(json.data).to.be.an('array'); pm.expect(json.data.length).to.be.greaterThan(0); });",
+                  "pm.test('Has interests', function() { var json = pm.response.json(); pm.expect(json.interests).to.be.an('array'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "description": "Full-text keyword search across all resume sections",
+      "item": [
+        {
+          "name": "POST Search - MuleSoft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"MuleSoft\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search across all resume sections for the keyword 'MuleSoft'. Returns matching experience, skills, certifications, and achievements with a summary of total matches."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
+                  "pm.test('Has keyword in response', function() { var json = pm.response.json(); pm.expect(json.keyword).to.eql('MuleSoft'); });",
+                  "pm.test('Has results object', function() { var json = pm.response.json(); pm.expect(json.results).to.be.an('object'); });",
+                  "pm.test('Has summary', function() { var json = pm.response.json(); pm.expect(json.summary).to.have.property('totalCertificationMatches'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Search - Salesforce",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"Salesforce\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'Salesforce' across all resume sections. Should match Salesforce PSS experience at Capgemini/SFA, Salesforce certifications (Agentforce Specialist, AI Associate, MuleSoft Integration Architect), and Salesforce skills."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - CloudHub",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"CloudHub\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'CloudHub' - should return Capgemini SFA experience (CloudHub 2.0 VPC/Private Space), Infosys HSBC CloudHub migration, and CloudHub 2.0 skills."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - AWS",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"AWS\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'AWS' - returns AWS GCC, CloudWatch, SES experience and AWS Certified Cloud Practitioner certification."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - Singapore Government",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"Singapore\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'Singapore' - returns SFA (Singapore Food Agency) project at Capgemini and Singapore Government cloud experience."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - MCP",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"MCP\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'MCP' — matches MCP Server skills, Anthropic MCP certifications (2x), AI Integration Innovation project, and MCP-related experience at Capgemini."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - Agentforce",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"Agentforce\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'Agentforce' — matches Salesforce Agentforce Specialist certification, Agentforce skills, and AI Integration Innovation project."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - GovTech",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"GovTech\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Search for 'GovTech' — matches Singapore Government Technology Agency context in the SFA Enterprise Licensing Modernization project at Capgemini."
+          },
+          "response": []
+        },
+        {
+          "name": "POST Search - Empty Keyword (Validation)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"keyword\": \"\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/resume/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "v1", "resume", "search"]
+            },
+            "description": "Test validation: empty keyword should return an error with an example of how to use the API."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Returns error for empty keyword', function() { var json = pm.response.json(); pm.expect(json).to.have.property('error'); });",
+                  "pm.test('Provides example', function() { var json = pm.response.json(); pm.expect(json).to.have.property('example'); });"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

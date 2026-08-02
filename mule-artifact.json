@@ -1,0 +1,7 @@
+{
+    "name": "resume-ai-agent-api-v1",
+    "minMuleVersion": "4.9.6",
+    "javaSpecificationVersions": [
+      "17"
+    ]
+}
