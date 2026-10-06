@@ -5,7 +5,7 @@ baseUri: http://localhost:8081/api/{version}
 mediaType: application/json
 
 description: |
-  Resume AI Agent API for Dinesh Babu R — MuleSoft Platform Architect & Senior Integration Consultant.
+  Resume AI Agent API for Dinesh Babu R - Enterprise Integration & MuleSoft Professional.
   Exposes structured resume data as a queryable REST API with 10 endpoints covering profile,
   experience, skills, education, certifications, projects, achievements, and keyword search.
   Designed for integration with MCP (Model Context Protocol) servers and AI chat interfaces.
@@ -45,18 +45,18 @@ description: |
                 {
                   "data": {
                     "name": "Dinesh Babu R",
-                    "title": "MuleSoft Platform Architect | Senior Integration Consultant | API & Cloud Architecture",
+                    "title": "Enterprise Integration & MuleSoft Professional",
                     "contact": {
                       "email": "dinesh6.db@gmail.com",
                       "phone": "+65 88478175",
                       "linkedin": "linkedin.com/in/dinesh-babu-r-4a5117b0",
                       "location": "Singapore"
                     },
-                    "summary": "MuleSoft Integration Architect with 10+ years...",
+                    "summary": "Enterprise integration professional with 10+ years of IT experience...",
                     "totalYearsExperience": 10,
-                    "currentRole": "MuleSoft Technical Architect / Senior Consultant",
-                    "currentEmployer": "Capgemini Singapore Pte Ltd",
-                    "certificationCount": 11
+                    "currentRole": "Technical Analyst",
+                    "currentEmployer": "V4 Impact Pte Ltd",
+                    "certificationCount": 12
                   },
                   "meta": {
                     "section": "profile",
@@ -68,7 +68,7 @@ description: |
     get:
       displayName: Get All Experience
       description: |
-        Returns complete work experience across 5 companies: Capgemini (2025-Present),
+        Returns complete work experience across 5 companies: V4 Impact Pte Ltd (2025-Present),
         Deloitte (2022-2025), Infosys (2021-2022), Apisero (2020-2021), Accenture (2016-2020).
         Each entry includes role, period, type, and client engagements with key achievements.
       responses:
@@ -80,9 +80,9 @@ description: |
                 {
                   "data": [
                     {
-                      "company": "Capgemini Singapore Pte Ltd",
+                      "company": "V4 Impact Pte Ltd",
                       "period": "Jul 2025 - Present",
-                      "role": "MuleSoft Technical Architect / Senior Consultant",
+                      "role": "Technical Analyst",
                       "type": "Current",
                       "clients": []
                     }
@@ -97,9 +97,9 @@ description: |
     /{company}:
       uriParameters:
         company:
-          description: Company name to filter by (case-insensitive partial match). Examples - capgemini, deloitte, infosys, apisero, accenture
+          description: Company name to filter by (case-insensitive partial match). Examples - v4 impact, deloitte, infosys, apisero, accenture
           type: string
-          example: capgemini
+          example: v4 impact
       get:
         displayName: Get Experience by Company
         description: |
@@ -123,7 +123,7 @@ description: |
                     ],
                     "meta": {
                       "section": "experience",
-                      "filter": "capgemini",
+                      "filter": "v4 impact",
                       "resultsFound": 1,
                       "retrievedAt": "2026-07-24T12:00:00"
                     }
@@ -135,8 +135,8 @@ description: |
                 example: |
                   {
                     "error": "No experience found for company: xyz",
-                    "availableCompanies": ["Capgemini Singapore Pte Ltd", "Deloitte Touche Tohmatsu India LLP"],
-                    "suggestion": "Try: capgemini, deloitte, infosys, apisero, or accenture"
+                    "availableCompanies": ["V4 Impact Pte Ltd", "Deloitte Touche Tohmatsu India LLP"],
+                    "suggestion": "Try: v4 impact, deloitte, infosys, apisero, or accenture"
                   }
 
   /skills:
