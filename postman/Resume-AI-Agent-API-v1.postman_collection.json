@@ -123,7 +123,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "experience"]
             },
-            "description": "Returns all work experience: Capgemini (2025-Present), Deloitte (2022-2025), Infosys (2021-2022), Apisero (2020-2021), Accenture (2016-2020). Each entry includes role, period, and client engagements."
+            "description": "Returns all work experience: V4 Impact (2025-Present), Deloitte (2022-2025), Infosys (2021-2022), Apisero (2020-2021), Accenture (2016-2020). Each entry includes role, period, and client engagements."
           },
           "response": [],
           "event": [
@@ -141,7 +141,7 @@
           ]
         },
         {
-          "name": "GET Experience - Capgemini",
+          "name": "GET Experience - V4 Impact",
           "request": {
             "method": "GET",
             "header": [
@@ -151,11 +151,11 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/resume/experience/capgemini",
+              "raw": "{{baseUrl}}/api/v1/resume/experience/v4 impact",
               "host": ["{{baseUrl}}"],
-              "path": ["api", "v1", "resume", "experience", "capgemini"]
+              "path": ["api", "v1", "resume", "experience", "v4 impact"]
             },
-            "description": "Filter experience by company: Capgemini (current). Returns MuleSoft Technical Architect role at Singapore Food Agency (SFA) Enterprise Licensing Modernization programme."
+            "description": "Filter experience by company: V4 Impact (current). Returns Technical Analyst role at Singapore Food Agency (SFA) Enterprise Licensing Modernization programme."
           },
           "response": [],
           "event": [
@@ -164,7 +164,7 @@
               "script": {
                 "exec": [
                   "pm.test('Status code is 200', function() { pm.response.to.have.status(200); });",
-                  "pm.test('Company is Capgemini', function() { var json = pm.response.json(); pm.expect(json.data[0].company).to.include('Capgemini'); });"
+                  "pm.test('Company is V4 Impact', function() { var json = pm.response.json(); pm.expect(json.data[0].company).to.include('V4 Impact'); });"
                 ],
                 "type": "text/javascript"
               }
@@ -550,7 +550,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "search"]
             },
-            "description": "Search for 'Salesforce' across all resume sections. Should match Salesforce PSS experience at Capgemini/SFA, Salesforce certifications (Agentforce Specialist, AI Associate, MuleSoft Integration Architect), and Salesforce skills."
+            "description": "Search for 'Salesforce' across all resume sections. Should match Salesforce PSS experience at V4 Impact/SFA, Salesforce certifications (Agentforce Specialist, AI Associate, MuleSoft Integration Architect), and Salesforce skills."
           },
           "response": []
         },
@@ -572,7 +572,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "search"]
             },
-            "description": "Search for 'CloudHub' - should return Capgemini SFA experience (CloudHub 2.0 VPC/Private Space), Infosys HSBC CloudHub migration, and CloudHub 2.0 skills."
+            "description": "Search for 'CloudHub' - should return V4 Impact SFA experience (CloudHub 2.0 VPC/Private Space), Infosys HSBC CloudHub migration, and CloudHub 2.0 skills."
           },
           "response": []
         },
@@ -616,7 +616,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "search"]
             },
-            "description": "Search for 'Singapore' - returns SFA (Singapore Food Agency) project at Capgemini and Singapore Government cloud experience."
+            "description": "Search for 'Singapore' - returns SFA (Singapore Food Agency) project at V4 Impact and Singapore Government cloud experience."
           },
           "response": []
         },
@@ -638,7 +638,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "search"]
             },
-            "description": "Search for 'MCP' — matches MCP Server skills, Anthropic MCP certifications (2x), AI Integration Innovation project, and MCP-related experience at Capgemini."
+            "description": "Search for 'MCP' — matches MCP Server skills, Anthropic MCP certifications (2x), AI Integration Innovation project, and MCP-related experience at V4 Impact."
           },
           "response": []
         },
@@ -682,7 +682,7 @@
               "host": ["{{baseUrl}}"],
               "path": ["api", "v1", "resume", "search"]
             },
-            "description": "Search for 'GovTech' — matches Singapore Government Technology Agency context in the SFA Enterprise Licensing Modernization project at Capgemini."
+            "description": "Search for 'GovTech' — matches Singapore Government Technology Agency context in the SFA Enterprise Licensing Modernization project at V4 Impact."
           },
           "response": []
         },
