@@ -142,7 +142,7 @@
               "options": { "raw": { "language": "json" } },
               "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 10,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-profile\",\n    \"arguments\": {}\n  }\n}"
             },
-            "description": "Returns Dinesh Babu R's full professional profile — name, title, contact details, 10-year career summary, current role at Capgemini Singapore."
+            "description": "Returns Dinesh Babu R's full professional profile — name, title, contact details, 10-year career summary, current role at V4 Impact."
           }
         },
         {
@@ -172,7 +172,7 @@
               "options": { "raw": { "language": "json" } },
               "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 11,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-experience\",\n    \"arguments\": {}\n  }\n}"
             },
-            "description": "Returns all 5 companies: Capgemini (2025–present), Deloitte (2022–2025), Infosys (2021–2022), Apisero (2020–2021), Accenture (2016–2020)."
+            "description": "Returns all 5 companies: V4 Impact (2025–present), Deloitte (2022–2025), Infosys (2021–2022), Apisero (2020–2021), Accenture (2016–2020)."
           }
         },
         {
@@ -229,7 +229,7 @@
       "name": "🏢 Experience by Company",
       "item": [
         {
-          "name": "Experience @ Capgemini",
+          "name": "Experience @ V4 Impact",
           "event": [
             {
               "listen": "test",
@@ -253,9 +253,9 @@
             "body": {
               "mode": "raw",
               "options": { "raw": { "language": "json" } },
-              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 20,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-experience-by-company\",\n    \"arguments\": { \"company\": \"capgemini\" }\n  }\n}"
+              "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 20,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-experience-by-company\",\n    \"arguments\": { \"company\": \"v4 impact\" }\n  }\n}"
             },
-            "description": "MuleSoft Technical Architect at Capgemini Singapore (Jul 2025–Present). Client: Singapore Food Agency — Enterprise Licensing Modernization."
+            "description": "Technical Analyst at V4 Impact (Jul 2025–Present). Client: Singapore Food Agency — Enterprise Licensing Modernization."
           }
         },
         {
@@ -362,7 +362,7 @@
               "options": { "raw": { "language": "json" } },
               "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 30,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-certifications\",\n    \"arguments\": {}\n  }\n}"
             },
-            "description": "Returns all 13 certifications: MuleSoft 5x, Salesforce 2x, AWS 1x, Workato 3x, Anthropic MCP 2x."
+            "description": "Returns current certification history across MuleSoft, Salesforce, AWS, Workato and MCP learning."
           }
         },
         {
@@ -380,7 +380,7 @@
               "options": { "raw": { "language": "json" } },
               "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 31,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"get-achievements\",\n    \"arguments\": {}\n  }\n}"
             },
-            "description": "Returns professional awards: Deloitte Client Centricity (Sasol 2023), Deloitte Move the Dot (Unilever 2022), Infosys Glory Award (HSBC 2022), Apisero Raving Reviews (Casper 2021), H-1B Nominee, C4E Framework (Capgemini 2025)."
+            "description": "Returns professional awards: Deloitte Client Centricity (Sasol 2023), Deloitte Move the Dot (Unilever 2022), Infosys Glory Award (HSBC 2022), Apisero Raving Reviews (Casper 2021), "
           }
         },
         {
@@ -506,7 +506,7 @@
               "options": { "raw": { "language": "json" } },
               "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 44,\n  \"method\": \"tools/call\",\n  \"params\": {\n    \"name\": \"search-resume\",\n    \"arguments\": { \"keyword\": \"Singapore\" }\n  }\n}"
             },
-            "description": "Search for 'Singapore' — matches Capgemini Singapore, Singapore Food Agency, AWS GCC (Singapore government cloud)."
+            "description": "Search for 'Singapore' — matches V4 Impact, Singapore Food Agency, AWS GCC (Singapore government cloud)."
           }
         }
       ]
