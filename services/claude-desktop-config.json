@@ -12,22 +12,22 @@
   ],
   "mcpServers": {
     "resume-ai-agent": {
-      "url": "http://localhost:8082/mcp"
+      "url": "http://localhost:8081/mcp"
     }
   },
   "_availableTools": [
     "get-profile — Full professional profile",
-    "get-experience — All work experience across 5 companies",
+    "get-experience — All work experience across 5 employers",
     "get-experience-by-company — Filter by company name (capgemini, deloitte, etc.)",
     "get-skills — All technical skills and competencies",
     "get-education — Education background",
-    "get-certifications — All 13 certifications",
+    "get-certifications — Certification history",
     "get-projects — All client projects with technologies",
     "get-achievements — Awards and professional interests",
     "search-resume — Keyword search across all sections"
   ],
   "_ports": {
     "restApi": "http://localhost:8081/api/v1/resume/*",
-    "mcpServer": "http://localhost:8082/mcp"
+    "mcpServer": "http://localhost:8081/mcp"
   }
 }
