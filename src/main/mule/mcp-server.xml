@@ -10,7 +10,7 @@
     <!-- MCP TOOL 1: get-profile -->
     <flow name="mcp-tool-get-profile" doc:name="MCP: get-profile">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-profile" doc:name="MCP: get-profile">
-            <mcp:description>Get Dinesh Babu R full professional profile including name, title, contact details (email, phone, LinkedIn), 10-year career summary, current role as MuleSoft Technical Architect at Capgemini Singapore, industries served, and certification count.</mcp:description>
+            <mcp:description>Get Dinesh Babu R full professional profile including name, title, contact details (email, phone, LinkedIn), 10-year career summary, current role as Technical Analyst at V4 Impact Pte Ltd, industries served, and certification count.</mcp:description>
             <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
@@ -26,7 +26,7 @@
     <!-- MCP TOOL 2: get-experience -->
     <flow name="mcp-tool-get-experience" doc:name="MCP: get-experience">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-experience" doc:name="MCP: get-experience">
-            <mcp:description>Get all work experience across 5 companies: Capgemini Singapore (Jul 2025-Present, MuleSoft Technical Architect at Singapore Food Agency), Deloitte (Apr 2022-Jun 2025, clients: UGI, ASF, CCEP, Sasol, Unilever), Infosys (Sep 2021-Apr 2022, HSBC CloudHub migration), Apisero (Jun 2020-Sep 2021, Casper Sleep), Accenture (Jun 2016-Jun 2020, Ross Stores and Pfizer).</mcp:description>
+            <mcp:description>Get all work experience across 5 companies: V4 Impact Pte Ltd (Jul 2025-Present, Technical Analyst working on the Singapore Food Agency licensing modernisation programme), Deloitte (Apr 2022-Jun 2025, clients: UGI, ASF, CCEP, Sasol, Unilever), Infosys (Sep 2021-Apr 2022, HSBC MuleSoft migration and runtime upgrade), Apisero (Jun 2020-Sep 2021, Casper Sleep), Accenture (Jun 2016-Jun 2020, Ross Stores and Pfizer).</mcp:description>
             <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
@@ -42,8 +42,8 @@
     <!-- MCP TOOL 3: get-experience-by-company -->
     <flow name="mcp-tool-get-experience-by-company" doc:name="MCP: get-experience-by-company">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-experience-by-company" doc:name="MCP: get-experience-by-company">
-            <mcp:description>Filter work experience by company name using case-insensitive partial match. Available: capgemini, deloitte, infosys, apisero, accenture.</mcp:description>
-            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{"company":{"type":"string","description":"Company name: capgemini, deloitte, infosys, apisero, accenture"}},"required":["company"]}]]></mcp:parameters-schema>
+            <mcp:description>Filter work experience by company name using case-insensitive partial match. Available: v4 impact, deloitte, infosys, apisero, accenture.</mcp:description>
+            <mcp:parameters-schema><![CDATA[{"type":"object","properties":{"company":{"type":"string","description":"Company name: v4 impact, deloitte, infosys, apisero, accenture"}},"required":["company"]}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
             </mcp:responses>
@@ -61,7 +61,7 @@
     <!-- MCP TOOL 4: get-skills -->
     <flow name="mcp-tool-get-skills" doc:name="MCP: get-skills">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-skills" doc:name="MCP: get-skills">
-            <mcp:description>Get all technical skills: competencies (30 items), integration platforms (MuleSoft, Workato), API security (OAuth 2.0, JWT, mTLS), cloud infrastructure (AWS GCC, CloudHub 2.0), DevOps/CI/CD, and integration patterns (CQRS, DLQ, Watermarking).</mcp:description>
+            <mcp:description>Get technical skills covering MuleSoft Anypoint Platform, API-led integration, API security (OAuth 2.0, JWT, mTLS), cloud integration, DevOps/CI/CD, DataWeave and enterprise integration patterns.</mcp:description>
             <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
@@ -93,7 +93,7 @@
     <!-- MCP TOOL 6: get-certifications -->
     <flow name="mcp-tool-get-certifications" doc:name="MCP: get-certifications">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-certifications" doc:name="MCP: get-certifications">
-            <mcp:description>Get all 13 certifications: MuleSoft 5x (Platform Architect 2024, Integration Architect 2026, Developer L1 2019, API Design 2019, Integration 2020), Salesforce 2x (Agentforce 2025, AI Associate 2025), AWS Cloud Practitioner 2024, Workato Automation Pro I/II/III 2023, Anthropic MCP Advanced 2026 and Intro 2026.</mcp:description>
+            <mcp:description>Get current certification history including MuleSoft Platform Integration Architect 2026, MuleSoft Platform Architect 2021, AWS Cloud Practitioner 2026, Salesforce Agentforce Specialist 2025, Salesforce AI Associate 2025, Workato Automation Pro I/II/III 2025, MuleSoft developer certifications, and Anthropic MCP Advanced Topics 2026.</mcp:description>
             <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
@@ -125,7 +125,7 @@
     <!-- MCP TOOL 8: get-achievements -->
     <flow name="mcp-tool-get-achievements" doc:name="MCP: get-achievements">
         <mcp:tool-listener config-ref="Mcp_Config" name="get-achievements" doc:name="MCP: get-achievements">
-            <mcp:description>Get professional awards: Deloitte Client Centricity Award (Sasol 2023), Deloitte Move the Dot (Unilever 2022), Infosys Glory Award (HSBC 2022), Apisero Raving Reviews (Casper Sleep 2021), Apisero Star Performer (2021), H-1B Visa Nominee (2022), C4E Framework Delivery (Capgemini 2025). Also includes professional interests in agentic integration and MCP-server architectures.</mcp:description>
+            <mcp:description>Get professional awards: Deloitte Client Centricity Award (Sasol 2023), Deloitte Move the Dot Award (Unilever 2022), Infosys Glory Award (HSBC 2022), Apisero Raving Reviews Award (Casper Sleep 2021), and Apisero Star Performer Award (Casper Sleep 2021). Also includes professional interests in agentic integration and MCP-server architectures.</mcp:description>
             <mcp:parameters-schema><![CDATA[{"type":"object","properties":{}}]]></mcp:parameters-schema>
             <mcp:responses>
                 <mcp:text-tool-response-content text="#[write(payload, 'application/json')]"/>
