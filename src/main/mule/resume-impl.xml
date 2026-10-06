@@ -102,7 +102,7 @@ else
 {
     error: "No experience found for company: " ++ companyFilter,
     availableCompanies: resumeData.experience.company,
-    suggestion: "Try: capgemini, deloitte, infosys, apisero, or accenture"
+    suggestion: "Try: v4 impact, deloitte, infosys, apisero, or accenture"
 }]]></ee:set-payload>
             </ee:message>
         </ee:transform>
